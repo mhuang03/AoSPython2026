@@ -3,9 +3,8 @@ import random
 people = [
     "Rachel",
     # "Coco",
-    # "Sam",
     "Ronny",
-    "Ethan",
+    # "Ethan",
 ]
 
 print(random.choice(people))
