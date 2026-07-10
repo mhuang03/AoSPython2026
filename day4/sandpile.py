@@ -43,7 +43,7 @@ for i in range(SIZE):
 
 img = Image.fromarray(coloredBoard, 'RGB')
 #img.save('my.png')
-display(img)
+img.show()
 
 end_time = time.time()
 print("Program took: ",  end_time-start_time)
