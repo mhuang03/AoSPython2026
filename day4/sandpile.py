@@ -18,6 +18,18 @@ board[floor(SIZE/2)][floor(SIZE/2)] = SAND_GRAINS  # put all the grains in the m
 # you'll need this to happen in a loop until all the pixels have <4 grains of sand
 # as long as there are still any with at least 4, topple 1 onto each neighboring pixel
 
+new_board = np.zeros((SIZE, SIZE))
+for i in range(SIZE):
+  for j in range(SIZE):
+    grains = board[i][j]
+    if grains >= 4:
+      new_board[i][j] = grains - 4
+      new_board[i - 1][j] += 1
+      new_board[i + 1][j] += 1
+      new_board[i][j - 1] += 1
+      new_board[i][j + 1] += 1
+board = new_board
+
 
 
 
@@ -37,12 +49,12 @@ for i in range(SIZE):
     elif board[i][j] == 1:
       coloredBoard[2*i:2*i+2,2*j:2*j+2] = [150,150,255]
     elif board[i][j] == 2:
-      coloredBoard[2*i:2*i+2,2*j:2*j+2] = [50,50,200]
+      coloredBoard[2*i:2*i+2,2*j:2*j+2] = [50,50,255]
     else:
       coloredBoard[2*i:2*i+2,2*j:2*j+2] = [0,0,255]
 
 img = Image.fromarray(coloredBoard, 'RGB')
-#img.save('my.png')
+# img.save(f'piles/pile_{SIZE}_{SAND_GRAINS}.png')
 img.show()
 
 end_time = time.time()
