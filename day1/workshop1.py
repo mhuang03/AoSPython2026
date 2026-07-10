@@ -37,7 +37,7 @@ math.sqrt(9)  # == 3, square root function
 
 
 # Problem 5: Smart Guesser
-# In class, we wrote a program for a higher/lower guessing game.
+# In class, we wrote a program for a higher/lower guessing game.py.
 # Create a program that implements a guessing strategy for the computer, where the user tells
 # the program higher/lower instead. What kind of strategy can the computer use?
 # Hint: If the user isn't lying, the optimal strategy for guessing 1-100 guarantees the

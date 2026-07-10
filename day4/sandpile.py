@@ -4,7 +4,7 @@ import numpy as np
 import time
 
 SIZE = 101  # board will be SIZE by SIZE pixels
-SAND_GRAINS = 10000  # grains of sand to start with
+SAND_GRAINS = 21000  # grains of sand to start with
 
 start_time = time.time()
 
@@ -18,17 +18,26 @@ board[floor(SIZE/2)][floor(SIZE/2)] = SAND_GRAINS  # put all the grains in the m
 # you'll need this to happen in a loop until all the pixels have <4 grains of sand
 # as long as there are still any with at least 4, topple 1 onto each neighboring pixel
 
-new_board = np.zeros((SIZE, SIZE))
-for i in range(SIZE):
-  for j in range(SIZE):
-    grains = board[i][j]
-    if grains >= 4:
-      new_board[i][j] = grains - 4
-      new_board[i - 1][j] += 1
-      new_board[i + 1][j] += 1
-      new_board[i][j - 1] += 1
-      new_board[i][j + 1] += 1
-board = new_board
+done = False
+while not done:
+  done = True
+  new_board = np.zeros((SIZE, SIZE))
+  for i in range(SIZE):
+    for j in range(SIZE):
+      grains = board[i][j]
+      if grains >= 4:
+        done = False
+        per = grains // 4
+        new_board[i][j] += grains - 4*per
+
+        for n_i, n_j in [(i+1, j), (i-1, j), (i, j+1), (i, j-1)]:
+          if 0 <= n_i < SIZE and 0 <= n_j < SIZE:
+            new_board[n_i][n_j] += per
+          else:
+            new_board[i][j] += per
+      else:
+        new_board[i][j] += grains
+  board = new_board
 
 
 
@@ -54,8 +63,8 @@ for i in range(SIZE):
       coloredBoard[2*i:2*i+2,2*j:2*j+2] = [0,0,255]
 
 img = Image.fromarray(coloredBoard, 'RGB')
-# img.save(f'piles/pile_{SIZE}_{SAND_GRAINS}.png')
-img.show()
+img.save(f'piles/pile_{SIZE}_{SAND_GRAINS}.png')
+# img.show()
 
 end_time = time.time()
 print("Program took: ",  end_time-start_time)
